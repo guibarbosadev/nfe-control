@@ -1,12 +1,9 @@
 import React from "react";
 import Router from "./app/Router";
+import "./global.scss";
 
 function App(): JSX.Element {
-  return (
-    <div className="App">
-      <Router />
-    </div>
-  );
+  return <Router />;
 }
 
 export default App;
