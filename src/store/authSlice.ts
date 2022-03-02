@@ -1,10 +1,10 @@
 import { AuthState } from "./authTypes";
 import { createSlice } from "@reduxjs/toolkit";
-import { login, signUp } from "./authActions";
+import { login, signUp, getCurrentUser } from "./authActions";
 
 const initialState: AuthState = {
   user: null,
-  status: "idle",
+  status: "loading",
 };
 
 export const authSlice = createSlice({
@@ -31,6 +31,16 @@ export const authSlice = createSlice({
         state.user = action.payload;
       })
       .addCase(signUp.rejected, (state) => {
+        state.status = "error";
+      })
+      .addCase(getCurrentUser.pending, (state) => {
+        state.status = "loading";
+      })
+      .addCase(getCurrentUser.fulfilled, (state, action) => {
+        state.status = "idle";
+        state.user = action.payload;
+      })
+      .addCase(getCurrentUser.rejected, (state) => {
         state.status = "error";
       });
   },

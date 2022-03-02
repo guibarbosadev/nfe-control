@@ -1,11 +1,17 @@
 import { User, UserCredentials } from "./store/authTypes";
 import bcrypt from "bcryptjs";
 
+const dbKeys = {
+  users: "users",
+  loggedInUser: "logged_in_user",
+};
+
 function getUsersOnDB() {
   let users: User[] = [];
 
   try {
-    users = (JSON.parse(localStorage.getItem("users") ?? "") || []) as User[];
+    users = (JSON.parse(localStorage.getItem(dbKeys.users) ?? "") ||
+      []) as User[];
   } catch {
     users = [];
   }
@@ -27,7 +33,7 @@ export async function login(credentials: UserCredentials) {
     throw new Error("Invalid email/password");
   }
 
-  localStorage.setItem("logged_in_user", credentials.email);
+  localStorage.setItem(dbKeys.loggedInUser, credentials.email);
 
   return user;
 }
@@ -52,7 +58,21 @@ export async function signUp(user: User) {
   const updatedUsers = users.concat(userOnDb);
   const stringifiedUsers = JSON.stringify(updatedUsers);
 
-  localStorage.setItem("users", stringifiedUsers);
+  localStorage.setItem(dbKeys.users, stringifiedUsers);
+  localStorage.setItem(dbKeys.loggedInUser, userOnDb.email);
 
   return userOnDb;
+}
+
+export async function getLoggedInUser() {
+  const email = localStorage.getItem(dbKeys.loggedInUser);
+  const isLoggedIn = Boolean(email);
+  let user: User | null = null;
+
+  if (isLoggedIn) {
+    const users = getUsersOnDB();
+    user = users.find((currentUser) => currentUser.email === email) ?? null;
+  }
+
+  return user;
 }
