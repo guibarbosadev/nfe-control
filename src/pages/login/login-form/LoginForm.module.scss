@@ -8,3 +8,9 @@
   padding: 2rem;
   width: 100%;
 }
+
+.social-login {
+  display: grid;
+  grid-template-columns: auto auto;
+  column-gap: 0.625rem;
+}

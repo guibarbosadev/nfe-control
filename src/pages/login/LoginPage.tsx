@@ -1,31 +1,16 @@
 import React from "react";
-import LoginMenu, { LoginOption } from "./login-menu/LoginMenu";
+import LoginForm, { LoginFormValues } from "./login-form/LoginForm";
 import classNames from "./LoginPage.module.scss";
-import SignUpForm from "./sign-up-form/SignUpForm";
 
 const LoginPage: React.FC = () => {
-  const [isSigningUp, setIsSigninUp] = React.useState(false);
-
-  const handleSelect = (option: LoginOption) => {
-    switch (option) {
-      case "email":
-        setIsSigninUp(true);
-        break;
-      default:
-        // TODO: handle facebook/google login/signup
-        break;
-    }
+  const handleLogin = (values: LoginFormValues) => {
+    // TODO: authenticate user
+    console.log(values);
   };
-
-  const quitSignUpForm = () => setIsSigninUp(false);
 
   return (
     <div className={classNames.container}>
-      {isSigningUp ? (
-        <SignUpForm handleGoBack={quitSignUpForm} />
-      ) : (
-        <LoginMenu handleSelect={handleSelect} />
-      )}
+      <LoginForm handleLogin={handleLogin} />
     </div>
   );
 };
