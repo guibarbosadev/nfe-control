@@ -4,7 +4,7 @@ import Router from "./app/Router";
 import { getCurrentUser } from "./store/authActions";
 import "./global.scss";
 
-function App(): React.ReactNode {
+function App(): JSX.Element {
   const user = useAppSelector((state) => state.auth.user);
   const dispatch = useAppDispatch();
   const getUser = React.useCallback(() => {
