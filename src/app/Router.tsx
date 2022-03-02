@@ -3,17 +3,18 @@ import { BrowserRouter, Route, Routes } from "react-router-dom";
 import Counter from "../features/counter/Counter";
 import LoginPage from "../pages/login/LoginPage";
 import SignUpPage from "../pages/sign-up/SignUpPage";
+import { useAppSelector } from "./hooks";
 
 const Router: React.FC = () => {
-  const isLoggedIn = false; // TODO: remove mock
+  const isLoggedIn = useAppSelector((state) => Boolean(state.auth.user));
 
   return (
     <BrowserRouter>
       <Routes>
         <>
           {isLoggedIn && <Route path="*" element={<Counter />} />}
-          <Route path="/signup" element={<SignUpPage />} />
-          <Route path="*" element={<LoginPage />} />
+          {!isLoggedIn && <Route path="/signup" element={<SignUpPage />} />}
+          {!isLoggedIn && <Route path="*" element={<LoginPage />} />}
         </>
       </Routes>
     </BrowserRouter>

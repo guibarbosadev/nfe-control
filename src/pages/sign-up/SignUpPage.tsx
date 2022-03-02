@@ -2,9 +2,12 @@ import React from "react";
 import SignUpForm, { SignUpFormValues } from "../login/sign-up-form/SignUpForm";
 import classNames from "./SignUpPage.module.scss";
 import { useNavigate } from "react-router-dom";
+import { useAppDispatch } from "../../app/hooks";
+import { signUp } from "../../store/authActions";
 
 const SignUpPage: React.FC = () => {
   const navigate = useNavigate();
+  const dispatch = useAppDispatch();
 
   const goBack = () => {
     const PREVIOUS_PAGE = -1;
@@ -13,8 +16,7 @@ const SignUpPage: React.FC = () => {
   };
 
   const submit = (values: SignUpFormValues) => {
-    console.log(values);
-    // TODO: sign up user
+    dispatch(signUp(values));
   };
 
   return (

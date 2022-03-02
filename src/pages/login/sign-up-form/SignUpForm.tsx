@@ -2,15 +2,9 @@ import React from "react";
 import { useForm } from "react-hook-form";
 import classNames from "./SignUpForm.module.scss";
 import commonClassNames from "../../../components/common.module.scss";
+import { User } from "../../../store/authTypes";
 
-export interface SignUpFormValues {
-  email: string;
-  name: string;
-  cnpj: string;
-  companyName: string;
-  phone: string;
-  password: string;
-}
+export type SignUpFormValues = User;
 
 interface SignUpFormProps {
   handleGoBack?: () => void;
