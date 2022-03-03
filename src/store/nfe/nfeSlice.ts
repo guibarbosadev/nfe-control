@@ -1,6 +1,6 @@
 import { NfeState } from "./nfeTypes";
 import { createSlice } from "@reduxjs/toolkit";
-import { getNfes } from "./nfeActions";
+import { getNfes, registerNfe } from "./nfeActions";
 
 const initialState: NfeState = {
   nfes: [],
@@ -21,9 +21,18 @@ const nfeSlice = createSlice({
         state.nfes = action.payload;
         state.status = "success";
       })
-      .addCase(getNfes.rejected, (state, action) => {
+      .addCase(getNfes.rejected, (state) => {
         state.status = "error";
-        console.log(action.error);
+      })
+      .addCase(registerNfe.pending, (state) => {
+        state.status = "loading";
+      })
+      .addCase(registerNfe.fulfilled, (state, action) => {
+        state.status = "success";
+        state.nfes = action.payload;
+      })
+      .addCase(registerNfe.rejected, (state) => {
+        state.status = "error";
       });
   },
 });

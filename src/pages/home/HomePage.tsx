@@ -1,7 +1,7 @@
 import React from "react";
 import { useAppDispatch, useAppSelector } from "../../app/hooks";
 import { getNfes } from "../../store/nfe/nfeActions";
-import { Bar, ComposedChart, XAxis, YAxis } from "recharts";
+import { Bar, ComposedChart, Tooltip, XAxis, YAxis } from "recharts";
 import { Link } from "react-router-dom";
 import classNames from "./HomePage.module.scss";
 
@@ -49,6 +49,14 @@ const HomePage: React.FC = () => {
       <main className={classNames.body}>
         <ComposedChart width={800} height={400} data={data}>
           <YAxis />
+          <Tooltip
+            formatter={(nfeValue: number) =>
+              new Intl.NumberFormat("pt-BR", {
+                style: "currency",
+                currency: "BRL",
+              }).format(nfeValue)
+            }
+          />
           <XAxis dataKey="name" />
           <Bar dataKey="value" barSize={20} fill="#28b8bd" />
         </ComposedChart>

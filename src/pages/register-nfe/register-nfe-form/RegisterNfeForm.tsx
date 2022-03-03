@@ -3,11 +3,15 @@ import { useForm } from "react-hook-form";
 import commonClassNames from "../../../components/common.module.scss";
 import { Nfe } from "../../../store/nfe/nfeTypes";
 import classNames from "./RegisterNfeForm.module.scss";
+import { transformDate } from "../../../app/util";
 
-export type RegisterNfeFormValues = Nfe;
+interface RegisterNfeFormValues extends Omit<Nfe, "date" | "compensationDate"> {
+  date: string;
+  compensationDate: string;
+}
 
 interface RegisterNfeFormProps {
-  onSubmit: (values: RegisterNfeFormValues) => void;
+  onSubmit: (values: Nfe) => void;
   handleGoBack?: () => void;
 }
 
@@ -15,12 +19,22 @@ const RegisterNfeForm: React.FC<RegisterNfeFormProps> = ({
   onSubmit,
   handleGoBack,
 }) => {
-  const { handleSubmit, register } = useForm<RegisterNfeFormValues>();
+  const { handleSubmit, register, reset } = useForm<RegisterNfeFormValues>({
+    defaultValues: {},
+  });
+  const parseValues = (values: RegisterNfeFormValues): Nfe => ({
+    ...values,
+    date: transformDate(values.date),
+    compensationDate: transformDate(values.compensationDate),
+  });
 
   return (
     <form
       className={`${classNames.form} ${commonClassNames.card}`}
-      onSubmit={handleSubmit(onSubmit)}
+      onSubmit={handleSubmit((values) => {
+        onSubmit(parseValues(values));
+        reset();
+      })}
     >
       <button
         type="button"
@@ -46,7 +60,10 @@ const RegisterNfeForm: React.FC<RegisterNfeFormProps> = ({
 
       <div className={commonClassNames.field}>
         <label htmlFor="value">Valor</label>
-        <input type="text" {...register("value", { required: true })} />
+        <input
+          type="text"
+          {...register("value", { required: true, valueAsNumber: true })}
+        />
       </div>
 
       <div className={commonClassNames.field}>
