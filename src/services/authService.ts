@@ -76,3 +76,7 @@ export async function getLoggedInUser() {
 
   return user;
 }
+
+export async function logout() {
+  localStorage.setItem("logged_in_user", "");
+}

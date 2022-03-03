@@ -1,6 +1,7 @@
 import React from "react";
 import { useAppDispatch, useAppSelector } from "../../app/hooks";
 import { getNfes } from "../../store/nfe/nfeActions";
+import { logout as createLogoutAction } from "../../store/auth/authActions";
 import { Bar, ComposedChart, Tooltip, XAxis, YAxis } from "recharts";
 import { Link } from "react-router-dom";
 import classNames from "./HomePage.module.scss";
@@ -31,6 +32,10 @@ const HomePage: React.FC = () => {
     name: monthNames[nfe.date.month],
   }));
 
+  const logout = () => {
+    dispatch(createLogoutAction());
+  };
+
   React.useEffect(() => {
     const isIdle = status === "idle";
 
@@ -42,6 +47,9 @@ const HomePage: React.FC = () => {
   return (
     <div className={classNames.container}>
       <header className={classNames.header}>
+        <button type="button" onClick={logout}>
+          Sair
+        </button>
         <Link to="/new">
           <button type="button">Lançar nota fiscal</button>
         </Link>
