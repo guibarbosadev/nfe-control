@@ -15,6 +15,12 @@ export interface Nfe {
   compensationDate: CustomDate;
 }
 
+export interface NfeTotalByMonth {
+  month: number;
+  total: number;
+  name: string;
+}
+
 export type NfeStatus = "idle" | "loading" | "error" | "success";
 
 export interface NfeState {

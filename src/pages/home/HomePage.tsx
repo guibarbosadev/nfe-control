@@ -5,33 +5,14 @@ import { logout as createLogoutAction } from "../../store/auth/authActions";
 import { Bar, ComposedChart, Tooltip, XAxis, YAxis } from "recharts";
 import { Link } from "react-router-dom";
 import classNames from "./HomePage.module.scss";
-
-const monthNames: { [key: number]: string } = {
-  1: "Jan",
-  2: "Fev",
-  3: "Mar",
-  4: "Abr",
-  5: "Mai",
-  6: "Jun",
-  7: "Jul",
-  8: "Ago",
-  9: "Set",
-  10: "Out",
-  11: "Nov",
-  12: "Dez",
-};
+import { formatMoney, getNfesTotalByMonth } from "../../app/util";
 
 const HomePage: React.FC = () => {
   const dispatch = useAppDispatch();
   const { nfe, auth } = useAppSelector((state) => state);
   const { user } = auth;
   const { nfes, status } = nfe;
-  const data = nfes.map((nfe) => ({
-    month: nfe.date.month,
-    value: nfe.value,
-    name: monthNames[nfe.date.month],
-  }));
-
+  const nfesTotalByMonth = getNfesTotalByMonth(new Date().getFullYear(), nfes);
   const logout = () => {
     dispatch(createLogoutAction());
   };
@@ -55,18 +36,11 @@ const HomePage: React.FC = () => {
         </Link>
       </header>
       <main className={classNames.body}>
-        <ComposedChart width={800} height={400} data={data}>
+        <ComposedChart width={800} height={400} data={nfesTotalByMonth}>
           <YAxis />
-          <Tooltip
-            formatter={(nfeValue: number) =>
-              new Intl.NumberFormat("pt-BR", {
-                style: "currency",
-                currency: "BRL",
-              }).format(nfeValue)
-            }
-          />
+          <Tooltip formatter={formatMoney} />
           <XAxis dataKey="name" />
-          <Bar dataKey="value" barSize={20} fill="#28b8bd" />
+          <Bar dataKey="total" barSize={20} fill="#28b8bd" />
         </ComposedChart>
       </main>
     </div>
