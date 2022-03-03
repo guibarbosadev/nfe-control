@@ -1,4 +1,4 @@
-import { User, UserCredentials } from "./store/auth/authTypes";
+import { User, UserCredentials } from "../store/auth/authTypes";
 import bcrypt from "bcryptjs";
 
 const dbKeys = {
