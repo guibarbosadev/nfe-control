@@ -4,7 +4,11 @@ import classNames from "./SignUpForm.module.scss";
 import commonClassNames from "../../../components/common.module.scss";
 import { User } from "../../../store/auth/authTypes";
 
-export type SignUpFormValues = User;
+export interface SignUpFormValues
+  extends Omit<User, "date" | "compensationDate"> {
+  date: string;
+  compensationDate: string;
+}
 
 interface SignUpFormProps {
   handleGoBack?: () => void;

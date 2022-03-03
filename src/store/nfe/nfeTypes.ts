@@ -1,4 +1,4 @@
-interface CustomDate {
+export interface CustomDate {
   month: number;
   year: number;
   day: number;
