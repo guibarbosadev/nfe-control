@@ -2,7 +2,7 @@ import React from "react";
 import { useForm } from "react-hook-form";
 import classNames from "./SignUpForm.module.scss";
 import commonClassNames from "../../../components/common.module.scss";
-import { User } from "../../../store/authTypes";
+import { User } from "../../../store/auth/authTypes";
 
 export type SignUpFormValues = User;
 
