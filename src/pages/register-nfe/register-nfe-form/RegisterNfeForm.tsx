@@ -8,9 +8,13 @@ export type RegisterNfeFormValues = Nfe;
 
 interface RegisterNfeFormProps {
   onSubmit: (values: RegisterNfeFormValues) => void;
+  handleGoBack?: () => void;
 }
 
-const RegisterNfeForm: React.FC<RegisterNfeFormProps> = ({ onSubmit }) => {
+const RegisterNfeForm: React.FC<RegisterNfeFormProps> = ({
+  onSubmit,
+  handleGoBack,
+}) => {
   const { handleSubmit, register } = useForm<RegisterNfeFormValues>();
 
   return (
@@ -18,6 +22,13 @@ const RegisterNfeForm: React.FC<RegisterNfeFormProps> = ({ onSubmit }) => {
       className={`${classNames.form} ${commonClassNames.card}`}
       onSubmit={handleSubmit(onSubmit)}
     >
+      <button
+        type="button"
+        className={classNames.goBackBtn}
+        onClick={handleGoBack}
+      >
+        Go back
+      </button>
       <div className={commonClassNames.field}>
         <label htmlFor="cnpj">CNPJ</label>
         <input type="text" {...register("cnpj", { required: true })} />
