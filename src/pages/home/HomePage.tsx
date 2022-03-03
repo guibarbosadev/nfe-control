@@ -6,17 +6,28 @@ import { Bar, ComposedChart, Tooltip, XAxis, YAxis } from "recharts";
 import { Link } from "react-router-dom";
 import classNames from "./HomePage.module.scss";
 import { formatMoney, getNfesTotalByMonth } from "../../app/util";
+import { filterNfes } from "../../store/nfe/nfeSlice";
+
+const currentDate = new Date();
+const yearsCount = 20;
+const startDate = currentDate.getFullYear();
+const years = Array.from({ length: yearsCount }).map(
+  (_, index) => startDate - index
+);
 
 const HomePage: React.FC = () => {
   const dispatch = useAppDispatch();
   const { nfe, auth } = useAppSelector((state) => state);
   const { user } = auth;
-  const { nfes, status } = nfe;
-  const nfesTotalByMonth = getNfesTotalByMonth(new Date().getFullYear(), nfes);
+  const { nfes, status, filter, totalsByMonth: nfesTotalByMonth } = nfe;
   const logout = () => {
     dispatch(createLogoutAction());
   };
-  const hasNfes = nfesTotalByMonth.length > 0
+  const hasNfes = nfesTotalByMonth.length > 0;
+
+  const onSelectYear = (event: React.ChangeEvent<HTMLSelectElement>) => {
+    dispatch(filterNfes({ ...filter, year: Number(event.target.value) }));
+  };
 
   React.useEffect(() => {
     const isIdle = status === "idle";
@@ -37,14 +48,27 @@ const HomePage: React.FC = () => {
         </Link>
       </header>
       <main className={classNames.body}>
-        {hasNfes ? (
-        <ComposedChart width={800} height={400} data={nfesTotalByMonth}>
-          <YAxis />
-          <Tooltip formatter={formatMoney} />
-          <XAxis dataKey="name" />
-          <Bar dataKey="total" barSize={20} fill="#28b8bd" />
-        </ComposedChart>
-        ) : <div>Não há NFe-s registradas para o período</div>}
+        <div className={classNames.graphContainer}>
+          <select value={filter.year} onChange={onSelectYear}>
+            {years.map((year) => (
+              <option key={year} value={year}>
+                {year}
+              </option>
+            ))}
+          </select>
+          {hasNfes ? (
+            <ComposedChart width={800} height={400} data={nfesTotalByMonth}>
+              <YAxis />
+              <Tooltip formatter={formatMoney} />
+              <XAxis dataKey="name" />
+              <Bar dataKey="total" barSize={20} fill="#28b8bd" />
+            </ComposedChart>
+          ) : (
+            <div className={classNames.defaultMessage}>
+              Não há NFe-s registradas para o período
+            </div>
+          )}
+        </div>
       </main>
     </div>
   );

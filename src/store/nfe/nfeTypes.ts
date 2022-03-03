@@ -25,6 +25,17 @@ export type NfeStatus = "idle" | "loading" | "error" | "success";
 
 export interface NfeState {
   nfes: Nfe[];
-  filteredNfes: Nfe[];
   status: NfeStatus;
+  filter: NfeFilter;
+  totalsByMonth: NfeTotalByMonth[];
+}
+
+export enum NfeGraphModes {
+  TotalByMonth = "total_by_month",
+  YearLeft = "year_left",
+}
+
+export interface NfeFilter {
+  year: number;
+  graph: NfeGraphModes;
 }

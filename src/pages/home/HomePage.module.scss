@@ -17,3 +17,21 @@
   justify-content: center;
   align-items: center;
 }
+
+.graphContainer {
+  width: 800px;
+  display: grid;
+  row-gap: 1rem;
+
+  select {
+    width: min-content;
+  }
+}
+
+.defaultMessage {
+  text-align: center;
+  height: 400px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}

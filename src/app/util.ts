@@ -50,7 +50,7 @@ export function getNfesTotalByMonth(year: number, nfes: Nfe[]) {
   let nfesTotalByMonth: NfeTotalByMonth[] = Array.from({
     length: biggestMonth,
   });
-  nfesTotalByMonth = nfesTotalByMonth.map((nfeTotalByMonth, index) => {
+  nfesTotalByMonth = nfesTotalByMonth.map((_nfeTotalByMonth, index) => {
     const month = index + 1;
     const monthNfes = filteredNfes.filter((nfe) => nfe.date.month === month);
     const total = monthNfes.reduce((previousTotal, currentNfe) => {
@@ -65,4 +65,14 @@ export function getNfesTotalByMonth(year: number, nfes: Nfe[]) {
   });
 
   return nfesTotalByMonth;
+}
+
+export function filterNfeByYear(year: number, nfes: Nfe[]) {
+  const filteredNfes = nfes.filter((nfe) => {
+    const isSameYear = nfe.date.year === year;
+
+    return isSameYear;
+  });
+
+  return filteredNfes;
 }
