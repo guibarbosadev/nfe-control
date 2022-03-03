@@ -16,6 +16,7 @@ const HomePage: React.FC = () => {
   const logout = () => {
     dispatch(createLogoutAction());
   };
+  const hasNfes = nfesTotalByMonth.length > 0
 
   React.useEffect(() => {
     const isIdle = status === "idle";
@@ -36,12 +37,14 @@ const HomePage: React.FC = () => {
         </Link>
       </header>
       <main className={classNames.body}>
+        {hasNfes ? (
         <ComposedChart width={800} height={400} data={nfesTotalByMonth}>
           <YAxis />
           <Tooltip formatter={formatMoney} />
           <XAxis dataKey="name" />
           <Bar dataKey="total" barSize={20} fill="#28b8bd" />
         </ComposedChart>
+        ) : <div>Não há NFe-s registradas para o período</div>}
       </main>
     </div>
   );
