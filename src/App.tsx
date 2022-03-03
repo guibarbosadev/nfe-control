@@ -1,7 +1,7 @@
 import React from "react";
 import { useAppDispatch, useAppSelector } from "./app/hooks";
 import Router from "./app/Router";
-import { getCurrentUser } from "./store/authActions";
+import { getCurrentUser } from "./store/auth/authActions";
 import "./global.scss";
 
 function App(): JSX.Element {

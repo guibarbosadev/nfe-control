@@ -3,7 +3,7 @@ import SignUpForm, { SignUpFormValues } from "../login/sign-up-form/SignUpForm";
 import classNames from "./SignUpPage.module.scss";
 import { useNavigate } from "react-router-dom";
 import { useAppDispatch } from "../../app/hooks";
-import { signUp } from "../../store/authActions";
+import { signUp } from "../../store/auth/authActions";
 
 const SignUpPage: React.FC = () => {
   const navigate = useNavigate();

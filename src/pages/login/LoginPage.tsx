@@ -2,7 +2,7 @@ import React from "react";
 import LoginForm, { LoginFormValues } from "./login-form/LoginForm";
 import classNames from "./LoginPage.module.scss";
 import { useAppDispatch, useAppSelector } from "../../app/hooks";
-import { login } from "../../store/authActions";
+import { login } from "../../store/auth/authActions";
 import { SyncLoader } from "react-spinners";
 
 const LoginPage: React.FC = () => {
