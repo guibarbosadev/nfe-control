@@ -1,3 +1,9 @@
+interface CustomDate {
+  month: number;
+  year: number;
+  day: number;
+}
+
 export interface Nfe {
   cnpj: string;
   companyName: string;
@@ -5,8 +11,8 @@ export interface Nfe {
   value: number;
   id: string;
   description: string;
-  date: string;
-  compensationDate: string;
+  date: CustomDate;
+  compensationDate: CustomDate;
 }
 
 export type NfeStatus = "idle" | "loading" | "error" | "success";
