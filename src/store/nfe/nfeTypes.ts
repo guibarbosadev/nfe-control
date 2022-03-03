@@ -28,11 +28,12 @@ export interface NfeState {
   status: NfeStatus;
   filter: NfeFilter;
   totalsByMonth: NfeTotalByMonth[];
+  remainingTotal: number;
 }
 
 export enum NfeGraphModes {
   TotalByMonth = "total_by_month",
-  YearLeft = "year_left",
+  RemainingTotal = "remaining_total",
 }
 
 export interface NfeFilter {

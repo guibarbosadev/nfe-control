@@ -1,7 +1,11 @@
 import { NfeFilter, NfeGraphModes, NfeState } from "./nfeTypes";
 import { createSlice, PayloadAction } from "@reduxjs/toolkit";
 import { getNfes, registerNfe } from "./nfeActions";
-import { getNfesTotalByMonth } from "../../app/util";
+import {
+  calcRemainingTotal,
+  getNfesTotalByMonth,
+  NFE_TOTAL_BY_YEAR,
+} from "../../app/util";
 
 const currentDate = new Date();
 const initialState: NfeState = {
@@ -12,6 +16,7 @@ const initialState: NfeState = {
     year: currentDate.getFullYear(),
   },
   status: "idle",
+  remainingTotal: NFE_TOTAL_BY_YEAR,
 };
 
 const nfeSlice = createSlice({
@@ -25,6 +30,7 @@ const nfeSlice = createSlice({
 
       state.filter = action.payload;
       state.totalsByMonth = nfesTotalByMonth;
+      state.remainingTotal = calcRemainingTotal(year, nfesTotalByMonth);
     },
   },
   extraReducers: (builder) => {
@@ -39,6 +45,10 @@ const nfeSlice = createSlice({
           action.payload
         );
         state.status = "success";
+        state.remainingTotal = calcRemainingTotal(
+          state.filter.year,
+          state.totalsByMonth
+        );
       })
       .addCase(getNfes.rejected, (state) => {
         state.status = "error";

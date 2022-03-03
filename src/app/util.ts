@@ -1,5 +1,7 @@
 import { CustomDate, Nfe, NfeTotalByMonth } from "../store/nfe/nfeTypes";
 
+export const NFE_TOTAL_BY_YEAR = 81_000;
+
 const monthNamesMap: { [key: number]: string } = {
   1: "Jan",
   2: "Fev",
@@ -75,4 +77,16 @@ export function filterNfeByYear(year: number, nfes: Nfe[]) {
   });
 
   return filteredNfes;
+}
+
+export function calcRemainingTotal(
+  year: number,
+  totalsByMonth: NfeTotalByMonth[]
+) {
+  const currentValue = totalsByMonth.reduce((total, nfeTotalByMonth) => {
+    return total + nfeTotalByMonth.total;
+  }, 0);
+  const remainingTotal = NFE_TOTAL_BY_YEAR - currentValue;
+
+  return remainingTotal;
 }

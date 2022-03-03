@@ -28,6 +28,13 @@
   }
 }
 
+.selectsContainer {
+  display: grid;
+  grid-template-columns: auto auto;
+  justify-content: flex-start;
+  column-gap: 0.625rem;
+}
+
 .defaultMessage {
   text-align: center;
   height: 400px;
