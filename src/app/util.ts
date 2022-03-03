@@ -51,17 +51,16 @@ export function getNfesTotalByMonth(year: number, nfes: Nfe[]) {
     length: biggestMonth,
   });
   nfesTotalByMonth = nfesTotalByMonth.map((nfeTotalByMonth, index) => {
-    const monthNfes = filteredNfes.filter(
-      (nfe) => nfe.date.month === index + 1
-    );
+    const month = index + 1;
+    const monthNfes = filteredNfes.filter((nfe) => nfe.date.month === month);
     const total = monthNfes.reduce((previousTotal, currentNfe) => {
       return previousTotal + currentNfe.value;
     }, 0);
 
     return {
       total,
-      month: index + 1,
-      name: monthNamesMap[index + 1],
+      month,
+      name: monthNamesMap[month],
     };
   });
 
